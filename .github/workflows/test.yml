@@ -30,21 +30,24 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up MSYS2
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW64
-        update: true
+    - name: Download MinGW installer
+      run: |
+        curl -LO http://prdownloads.sourceforge.net/mingw/installer/mingw-get-setup.exe
+
+    - name: Install MinGW
+      run: |
+        mingw-get-setup.exe /silent
 
     - name: Install GCC
       run: |
-        pacman -Syu --noconfirm
-        pacman -S --noconfirm mingw-w64-x86_64-gcc
+        mingw-get install gcc
+        mingw-get install mingw32-make
+
+    - name: Add MinGW to PATH
+      run: setx PATH "%PATH%;C:\MinGW\bin"
 
     - name: Compile C file
-      run: |
-        gcc -o test.exe src/test.c
+      run: gcc -o test.exe src/test.c
 
     - name: Run C file
-      run: |
-        .\test.exe
+      run: .\test.exe
