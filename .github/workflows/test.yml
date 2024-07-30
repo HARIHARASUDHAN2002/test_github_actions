@@ -30,7 +30,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up MinGW
+    - name: Set up MSYS2
       uses: msys2/setup-msys2@v2
       with:
         msystem: MINGW64
@@ -42,7 +42,9 @@ jobs:
         pacman -S --noconfirm mingw-w64-x86_64-gcc
 
     - name: Compile C file
-      run: gcc -o test.exe src/test.c
+      run: |
+        gcc -o test.exe src/test.c
 
     - name: Run C file
-      run: .\test.exe
+      run: |
+        .\test.exe
