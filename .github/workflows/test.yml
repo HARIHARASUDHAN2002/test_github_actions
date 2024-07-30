@@ -22,3 +22,27 @@ jobs:
 
     - name: Run C file
       run: ./test
+
+  windows:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up MinGW
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: MINGW64
+        update: true
+
+    - name: Install GCC
+      run: |
+        pacman -Syu --noconfirm
+        pacman -S --noconfirm mingw-w64-x86_64-gcc
+
+    - name: Compile C file
+      run: gcc -o test.exe src/test.c
+
+    - name: Run C file
+      run: .\test.exe
