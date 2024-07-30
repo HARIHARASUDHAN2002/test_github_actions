@@ -37,9 +37,13 @@ jobs:
     - name: Wait for 10 seconds
       run: sleep 10
 
+    - name: Redirect to the Downloads folder
+      run: cd Downloads
+
     - name: Install MinGW
       run: |
         mingw-get-setup.exe /silent
+
 
     - name: Install GCC
       run: |
