@@ -39,8 +39,8 @@ jobs:
 
     - name: Redirect to the C driver
       run: | 
-      cd c:
-      cd Users
+        cd c:
+        cd Users
 
     # - name: Redirect to the Downloads folder
     #   run: cd Downloads
