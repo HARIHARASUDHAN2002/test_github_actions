@@ -33,7 +33,7 @@ jobs:
     - name: Download MinGW installer
       run: |
         curl -LO http://prdownloads.sourceforge.net/mingw/installer/mingw-get-setup.exe
-        run: sleep 10
+      run: sleep 10
 
     - name: Install MinGW
       run: |
