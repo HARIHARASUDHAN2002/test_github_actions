@@ -33,33 +33,66 @@ jobs:
     - name: Download MinGW installer
       run: |
         curl -LO http://prdownloads.sourceforge.net/mingw/installer/mingw-get-setup.exe
-        
+
     - name: Wait for 10 seconds
-      run: sleep 10
-
-    - name: Redirect to the C driver
-      run: | 
-        cd c:
-        cd Users
-
-    # - name: Redirect to the Downloads folder
-    #   run: cd Downloads
+      run: Start-Sleep -Seconds 10
 
     - name: Install MinGW
       run: |
-        mingw-get-setup.exe /silent
-
+        .\mingw-get-setup.exe /silent
 
     - name: Install GCC
       run: |
-        mingw-get install gcc
-        mingw-get install mingw32-make
+        C:\MinGW\bin\mingw-get install gcc
 
     - name: Add MinGW to PATH
-      run: setx PATH "%PATH%;C:\MinGW\bin"
+      shell: powershell
+      run: |
+        $env:Path += ";C:\MinGW\bin"
+        [System.Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
 
     - name: Compile C file
       run: gcc -o test.exe src/test.c
 
     - name: Run C file
       run: .\test.exe
+
+
+    # steps:
+    # - name: Checkout code
+    #   uses: actions/checkout@v3
+
+    # - name: Download MinGW installer
+    #   run: |
+    #     curl -LO http://prdownloads.sourceforge.net/mingw/installer/mingw-get-setup.exe
+        
+    # - name: Wait for 10 seconds
+    #   run: sleep 10
+
+    # - name: Redirect to the C driver
+    #   run: | 
+    #     cd c:
+    #     cd Users
+    #     dir
+
+    # # - name: Redirect to the Downloads folder
+    # #   run: cd Downloads
+
+    # - name: Install MinGW
+    #   run: |
+    #     mingw-get-setup.exe /silent
+
+
+    # - name: Install GCC
+    #   run: |
+    #     mingw-get install gcc
+    #     mingw-get install mingw32-make
+
+    # - name: Add MinGW to PATH
+    #   run: setx PATH "%PATH%;C:\MinGW\bin"
+
+    # - name: Compile C file
+    #   run: gcc -o test.exe src/test.c
+
+    # - name: Run C file
+    #   run: .\test.exe
